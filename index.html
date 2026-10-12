@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220"><title>{{ app_name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar"><div class="brand-mark">E</div><div><div class="brand">EURUSD <span>ENGINE PRO</span></div><div class="subtitle">Market intelligence · Experimental research engine</div></div><div class="top-right"><span class="live-dot"></span><span id="server-status">Connexion</span><button id="refresh" class="ghost">Actualiser ↻</button></div></header>
+<main class="container">
+  <section class="hero"><div><p class="eyebrow">FX RESEARCH TERMINAL / 01</p><h1>Décider avec méthode.<br><span>Pas avec des certitudes inventées.</span></h1><p class="hero-copy">Price action multi-timeframe, liquidité, zones candidates et gestion du risque dans une interface unique.</p></div><div class="hero-symbol"><div class="symbol-label">INSTRUMENT</div><div class="symbol">EUR <span>/</span> USD</div><div class="market-source">Source indicative · Yahoo Finance</div></div></section>
+  <div id="error" class="error hidden"></div>
+  <section class="grid summary-grid">
+    <article class="panel signal-panel"><div class="panel-head"><span class="eyebrow">DÉCISION DU MOTEUR</span><span class="pill" id="data-state">CHARGEMENT</span></div><div id="signal" class="signal">—</div><p id="signal-caption" class="muted">Analyse en cours…</p><div class="score-wrap"><div class="score-label"><span>Confluence de règles</span><strong id="score">—</strong></div><div class="score-track"><div id="score-bar" class="score-bar"></div></div></div><p class="tiny muted">Ce score n'est pas une probabilité de réussite.</p></article>
+    <article class="panel price-panel"><div class="panel-head"><span class="eyebrow">DERNIER PRIX REÇU</span><span class="tiny muted">EUR/USD</span></div><div id="price" class="big-number">—</div><div class="price-meta"><span id="last-time">En attente des données</span><span id="trend" class="pill">—</span></div><div class="mini-stats"><div><span>ATR M5</span><strong id="atr">—</strong></div><div><span>Haut récent M5</span><strong id="recent-high">—</strong></div><div><span>Bas récent M5</span><strong id="recent-low">—</strong></div></div></article>
+  </section>
+  <section class="grid two-col">
+    <article class="panel"><div class="section-heading"><div><p class="eyebrow">CONFIRMATION DOLLAR</p><h2>DXY · indice du dollar</h2></div><span class="pill" id="dxy-alignment">EN ATTENTE</span></div><div id="dxy-cards" class="tf-grid"><div class="skeleton">Chargement du DXY…</div></div><p class="tiny muted">Le DXY est un filtre de contexte, pas un signal inverse automatique.</p></article>
+    <article class="panel"><div class="section-heading"><div><p class="eyebrow">PRIX & VOLUME</p><h2>VWAP · POC · zone de valeur</h2></div></div><div class="trade-levels"><div><span>VWAP / proxy</span><strong id="vwap-value">—</strong></div><div><span>POC / proxy</span><strong id="poc-value">—</strong></div><div><span>Value Area basse</span><strong id="va-low">—</strong></div><div><span>Value Area haute</span><strong id="va-high">—</strong></div></div><p id="profile-method" class="tiny muted">Méthode de calcul en attente.</p></article>
+  </section>
+  <section class="grid two-col">
+    <article class="panel"><div class="section-heading"><div><p class="eyebrow">ANALYSE</p><h2>Confluence multi-timeframe</h2></div><span class="muted tiny">H1 · M15 · M5 · M1</span></div><div class="tf-grid" id="timeframes"><div class="skeleton">Chargement des unités de temps…</div></div></article>
+    <article class="panel"><div class="section-heading"><div><p class="eyebrow">EXÉCUTION</p><h2>Plan de trade indicatif</h2></div><span class="pill">Sans exécution réelle</span></div><div class="trade-levels"><div><span>Entrée de référence</span><strong id="entry">—</strong></div><div><span>Stop-loss</span><strong id="sl">—</strong></div><div><span>Take-profit</span><strong id="tp">—</strong></div><div><span>Rendement / risque</span><strong id="rr">—</strong></div></div><div class="risk-note">Les niveaux sont expérimentaux. Vérifie le prix, le spread et la taille de position chez ton courtier avant toute décision.</div></article>
+  </section>
+  <section class="grid two-col">
+    <article class="panel"><div class="section-heading"><div><p class="eyebrow">POURQUOI ?</p><h2>Explication du scénario</h2></div></div><ul id="reasons" class="reason-list"><li>En attente des données…</li></ul></article>
+    <article class="panel"><div class="section-heading"><div><p class="eyebrow">STRUCTURE</p><h2>Zones détectées</h2></div></div><div id="zones" class="zones"><p class="muted">Les zones seront affichées après le chargement.</p></div></article>
+  </section>
+  <section class="panel"><div class="section-heading"><div><p class="eyebrow">CARTE DES PRIX</p><h2>Niveaux de réaction</h2><p class="muted">Haut/bas de la veille et swings récents. Ce sont des références à observer, pas des ordres automatiques.</p></div></div><div id="reaction-levels" class="zones"><p class="muted">Calcul des niveaux…</p></div></section>
+  <section class="panel backtest-panel"><div class="section-heading"><div><p class="eyebrow">VALIDATION QUANTITATIVE</p><h2>Backtest de référence</h2><p class="muted">Compare des règles exploratoires sur bougies publiques. Les tests ne prouvent pas la rentabilité future et ne reproduisent pas encore l’ensemble de la confluence DXY/VWAP/POC.</p></div><button id="run-backtest" class="primary">Lancer le backtest</button></div><div class="bt-controls"><label>Période<select id="bt-days"><option value="30">30 jours</option><option value="90">90 jours</option><option value="180">180 jours</option><option value="365">365 jours</option></select></label><label>Stratégie<select id="bt-strategy"><option value="ema">Baseline EMA20/50</option><option value="sweep">Sweep + tendance</option><option value="sweep_displacement">Sweep + displacement</option><option value="confluence">Confluence + VWAP + DXY</option></select></label><label>Coût estimé (pips)<input id="bt-cost" type="number" min="0" max="10" step="0.1" value="1.2"></label></div><div id="backtest-results" class="bt-results"><p class="muted">Lance le test pour afficher les statistiques. Les performances historiques ne garantissent pas les résultats futurs.</p></div></section>
+  <section class="panel"><div class="section-heading"><div><p class="eyebrow">TRANSPARENCE</p><h2>Limites et qualité des données</h2></div></div><ul id="warnings" class="warning-list"><li>Le moteur n'est pas un conseiller financier et ne garantit aucune rentabilité.</li></ul><p class="tiny muted" id="source-note">Source des prix en cours de vérification.</p></section>
+  <footer>EURUSD Engine Pro · Recherche expérimentale · Aucune transaction n'est exécutée par ce site.</footer>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>

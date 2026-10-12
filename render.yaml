@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: eurusd-engine-pro
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 4 --timeout 60
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: CACHE_TTL_SECONDS
+        value: "45"
